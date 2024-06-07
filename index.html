@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
   <head>
     <meta charset="utf-8" />
@@ -12,6 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./style.css" />
     <script src="./app.js" async defer></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css"
+    />
   </head>
-  <body></body>
+  <body>
+    <header id="header-bar">
+      <div>
+        <h1>Kitty Clicker</h1>
+        <h2>Click to adopt cats!</h2>
+      </div>
+    </header>
+    <main id="main-container">
+      <section class="sections" id="first-section">
+        <p id="cookie-counter">0</p>
+      </section>
+      <section class="sections" id="second-section">
+        <div id="button-container">
+          <button id="cookie-button">
+            <img src="./assets/nappingcat.png" alt="" srcset="" />
+            <p>Pet the Cat!</p>
+          </button>
+        </div>
+      </section>
+      <section class="sections" id="third-section"></section>
+    </main>
+  </body>
 </html>
