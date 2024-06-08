@@ -56,3 +56,6 @@ let testAPI = getShopAPI();
 console.log(testAPI);
 
 //don't forget a "not enough cookies notice"
+
+//need to make localstorage function - this can go in the iteration function to update every second
+//need to make reset button - might not need to update localstorage here
