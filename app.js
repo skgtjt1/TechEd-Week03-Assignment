@@ -10,15 +10,10 @@ let kps = 1;
 
 //From Manny's template: make an array variable ready to accept an array of objects from the API
 let shopItems = [];
+let myInterval;
+let intervalStarted = false;
 
 const kittyButton = document.getElementById("cookie-button");
-
-kittyButton.addEventListener("click", function () {
-  //   console.log("I pet the kitty");
-  catIncrement();
-  //   console.log(kittyCount);
-  updateCounter();
-});
 
 function catIncrement() {
   kittyCount += kps; //this function will change based on upgrades... may not be a pure function because of that
@@ -30,18 +25,32 @@ function updateCounter() {
 }
 
 //setting the passive kitty generation to update every second by the amount in
-let myInterval = setInterval(function () {
-  //   console.log("I repeat myself every second");
-  catIncrement();
-  updateCounter();
-  storeScore();
-}, 1000);
+
+// let myInterval = setInterval(function () {
+//   //   console.log("I repeat myself every second");
+
+//   catIncrement();
+//   updateCounter();
+//   storeScore(); // does this maybe need to go first?
+// }, 1000);
+
+function startInterval() {
+  if (!intervalStarted) {
+    intervalStarted = true;
+    myInterval = setInterval(function () {
+      catIncrement();
+      updateCounter();
+      storeScore(); // Does this maybe need to go first?
+    }, 1000);
+  }
+}
 
 const upgradeContainer = document.querySelector("#upgrade-container");
 
 //fecthing the upgrades from API, basing this a lot on Manny's demo
 
 async function getShopAPI() {
+  //honestly not sure about async but it was in the workshop
   const receivedData = await fetch(
     "https://cookie-upgrade-api.vercel.app/api/upgrades"
   );
@@ -79,11 +88,37 @@ function restoreScore() {
   let retrievedKpsString = localStorage.getItem("savedkps");
   // Convert the string back to a number
   let retrievedCount = Number(retrievedCountString);
-  let retrievedKps = Number(retrievedCountString);
+  let retrievedKps = Number(retrievedKpsString);
   //now to save the kitty per second
   //used .toString since can't save non-strings to the locastorage and this isn't a form.
   kittyCount = retrievedCount;
   kps = retrievedKps;
 }
+const stopResetButton = document.getElementById("reset-button");
 
-restoreScore();
+kittyButton.addEventListener("click", function () {
+  //   console.log("I pet the kitty");
+  catIncrement();
+  //   console.log(kittyCount);
+  updateCounter();
+  startInterval();
+});
+
+stopResetButton.addEventListener("click", function () {
+  clearInterval(myInterval);
+  kittyCount = 0;
+  kps = 1;
+  localStorage.setItem("savedcount", kittyCount);
+  localStorage.setItem("savedkps", kps); //should work since I just reset those variables
+  console.log("The reset button has been pressed");
+  updateCounter();
+  intervalStarted = false; // resets resets the flag for the startInterval function
+  //   startInterval(); // Restart the interval function
+});
+
+//found on stack exchange, makes the function only run on page load
+window.onload = function () {
+  restoreScore();
+};
+
+//need to make a stop and reset button
