@@ -1,10 +1,8 @@
-console.log("test");
+// console.log("test");
 
 //The all important kitty count variable
 
 let kittyCount = 0;
-
-// cookies per second could start at 0 and be initialised on first click? stretch goal
 //This variable will track the passive kitty generation
 let kps = 1;
 
@@ -26,7 +24,7 @@ function updateCounter() {
 
 function startInterval() {
   if (!intervalStarted) {
-    // this basically
+    // this basically allows for the main button to start the game, using a flag that is set as false above, and switching it to true in this function
     intervalStarted = true;
     myInterval = setInterval(function () {
       catIncrement();
@@ -36,13 +34,7 @@ function startInterval() {
   }
 }
 
-//need to make localstorage function - this can go in the iteration function to update every second
-//need to make reset button - might not need to update localstorage here
-
-//locastorage test
-// Example number variable
-
-// Store the numbers as a string in local storage under keys = savedcount and
+// Store the numbers as a string in local storage under keys = savedcount and savedKps
 function storeScore() {
   localStorage.setItem("savedcount", kittyCount.toString());
   localStorage.setItem("savedkps", kps.toString());
@@ -57,6 +49,7 @@ function restoreScore() {
 
   if (retrievedCountString !== null) {
     //only tries to load the localstorage values if they exist. otherwise sets the variable to starting values. Needed to add this otherwise game wouldn't start without the reset function being called for some reason...
+    //I'm glad I came across this technique of checking for presense of data
     kittyCount = Number(retrievedCountString);
   } else {
     kittyCount = 0;
@@ -71,14 +64,12 @@ function restoreScore() {
 
 //now to save the kitty per second
 //used .toString since can't save non-strings to the locastorage and this isn't a form.
-//   kittyCount = retrievedCount;
-//   kps = retrievedKps;
 
 const stopResetButton = document.getElementById("reset-button");
 
 kittyButton.addEventListener("click", function () {
   //   console.log("I pet the kitty");
-  startInterval();
+  startInterval(); //this function should only fully run the first time since it has an if statement that will fail after the intervalStarted variable becomes true. Solution to having the same button start the game and also generate the clicks.
   catIncrement();
   //   console.log(kittyCount);
   updateCounter();
@@ -95,8 +86,6 @@ stopResetButton.addEventListener("click", function () {
   intervalStarted = false; // resets the flag for the startInterval function
 });
 
-//found on stack exchange, makes the function only run on page load
-
 const shopContainer = document.getElementById("upgrade-container");
 
 //From Manny's template: make an array variable ready to accept an array of objects from the API
@@ -107,21 +96,21 @@ async function getShopAPI() {
     "https://cookie-upgrade-api.vercel.app/api/upgrades"
   );
   const json = await response.json();
-  upgradeItems = json; // assuming json is the array of upgrade items
+  upgradeItems = json; // sort of cobbled this together
   displayShop(); // Call displayShop after fetching the items
 }
 
 function displayShop() {
   upgradeItems.forEach((shopItem) => {
-    const itemDiv = document.createElement("div");
-    itemDiv.classList.add("upgrade-item");
+    //take the array of objects I made from the API and loop through basically extracting the values from each key
+    const itemDiv = document.createElement("div"); //make divs for each upgrade item
+    itemDiv.classList.add("upgrade-item"); //add class to the div
 
     const itemName = document.createElement("p");
-    itemName.textContent = `${shopItem.name}`;
+    itemName.textContent = `${shopItem.name}`; //found this on stackexchange, reminded me that template literals exist, looks much nicer and keeps number of p tags down
 
     const itemCost = document.createElement("p");
     itemCost.textContent = `Cost: ${shopItem.cost}`;
-    //reminded of template literals.
 
     const itemIncrease = document.createElement("p");
     itemIncrease.textContent = `Increase: ${shopItem.increase}`;
@@ -129,14 +118,15 @@ function displayShop() {
     const button = document.createElement("button");
     button.classList.add("purchase");
     button.textContent = "Purchase";
-    button.addEventListener("click", () => purchaseUpgrade(shopItem));
+    button.addEventListener("click", () => purchaseUpgrade(shopItem)); //shopItem can be accessed by another function, still need to learn more about scope restrictions..
+    //during debugging GPT suggested putting the eventlistener button within this function, only way it seems to work.
 
-    itemDiv.appendChild(itemName);
+    itemDiv.appendChild(itemName); //have to append all these first to the container, need to remember this for future projects
     itemDiv.appendChild(itemCost);
     itemDiv.appendChild(itemIncrease);
     itemDiv.appendChild(button);
 
-    shopContainer.appendChild(itemDiv);
+    shopContainer.appendChild(itemDiv); //finally append the upgrade div to the upgrade container, CSS grid means they will populate dynamically.
   });
 }
 
@@ -147,10 +137,10 @@ function purchaseUpgrade(shopItem) {
     updateCounter();
     storeScore();
   } else {
-    alert("Not enough kitties!");
+    alert("Not enough kitties!"); //not really necessary, just fun. Although if I had time I would have used something other than an alert, perhaps just unhiding and rehiding an element using a timer
   }
 }
-
+//found on stack exchange, makes the function only run on page load
 //these only get called once when the page loads
 window.onload = function () {
   restoreScore();
