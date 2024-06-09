@@ -121,6 +121,7 @@ function displayShop() {
 
     const itemCost = document.createElement("p");
     itemCost.textContent = `Cost: ${shopItem.cost}`;
+    //reminded of template literals.
 
     const itemIncrease = document.createElement("p");
     itemIncrease.textContent = `Increase: ${shopItem.increase}`;
