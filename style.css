@@ -2,13 +2,13 @@
 
 /* mobile first design */
 body {
-  background-color: papayawhip;
   font-family: sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-image: url("./assets/8416027.jpg");
 }
 
 #header-bar {
@@ -19,8 +19,7 @@ body {
   align-items: center;
 }
 
-#header-bar h1,
-#header-bar h2 {
+.headings {
   font-weight: bold;
   text-align: center;
   margin: 0;
@@ -41,6 +40,7 @@ body {
   padding: 2%;
   justify-content: center;
   align-items: center;
+  background-color: papayawhip;
   /* overflow-y: auto; */
 }
 
@@ -149,8 +149,8 @@ body {
 
 #upgrade-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns */
-  gap: 10px; /* space between grid items */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
   overflow: auto;
   max-height: 30vh;
   width: fit-content;
@@ -159,6 +159,7 @@ body {
 
 .upgrade-item {
   border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 10px;
   text-align: center;
 }
@@ -186,4 +187,21 @@ footer {
   height: fit-content;
   width: 100%;
   background-color: white;
+}
+
+@media (min-width: 700px) {
+  body {
+    align-items: center;
+    background-color: white;
+  }
+  #header-bar {
+    width: 70vw;
+  }
+  #main-container {
+    width: 70vw;
+  }
+
+  #upgrade-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
