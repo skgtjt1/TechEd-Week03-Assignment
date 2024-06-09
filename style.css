@@ -99,11 +99,44 @@ body {
 
 #third-section {
   height: 45%;
-  flex-direction: column;
+  display: flex;
   /* ready for the API DOM insertions for the upgrades */
 }
 
 /* don't forget the overflow-y stuff for the scrolling box (copy from my week2 assignment */
+
+#upgrade-container {
+  display: flex;
+  width: 100vw;
+  height: 100%;
+}
+
+.upgrades {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid blueviolet;
+  margin: -3px;
+}
+
+#upgrade-name {
+  width: 25%;
+  background-color: red;
+}
+
+#upgrade-cost {
+  width: 25%;
+  background-color: greenyellow;
+}
+
+#upgrade-increase {
+  width: 25%;
+  background-color: lightblue;
+}
+
+#upgrade-button {
+  width: 25%;
+  background-color: yellow;
+}
 
 footer {
   display: flex;

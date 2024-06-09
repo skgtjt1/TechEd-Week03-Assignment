@@ -45,7 +45,7 @@ function startInterval() {
   }
 }
 
-const upgradeContainer = document.querySelector("#upgrade-container");
+// const upgradeContainer = document.querySelector("#upgrade-container");
 
 //fecthing the upgrades from API, basing this a lot on Manny's demo
 
@@ -110,7 +110,7 @@ stopResetButton.addEventListener("click", function () {
   kps = 1;
   localStorage.setItem("savedcount", kittyCount);
   localStorage.setItem("savedkps", kps); //should work since I just reset those variables
-  console.log("The reset button has been pressed");
+  //   console.log("The reset button has been pressed");
   updateCounter();
   intervalStarted = false; // resets resets the flag for the startInterval function
   //   startInterval(); // Restart the interval function
@@ -119,6 +119,7 @@ stopResetButton.addEventListener("click", function () {
 //found on stack exchange, makes the function only run on page load
 window.onload = function () {
   restoreScore();
+  updateCounter();
 };
 
 //need to make a stop and reset button
