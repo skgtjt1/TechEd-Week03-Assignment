@@ -36,6 +36,7 @@ function updateCounter() {
 
 function startInterval() {
   if (!intervalStarted) {
+    // this basically
     intervalStarted = true;
     myInterval = setInterval(function () {
       catIncrement();
@@ -87,21 +88,32 @@ function restoreScore() {
   let retrievedCountString = localStorage.getItem("savedcount");
   let retrievedKpsString = localStorage.getItem("savedkps");
   // Convert the string back to a number
-  let retrievedCount = Number(retrievedCountString);
-  let retrievedKps = Number(retrievedKpsString);
+  //   let retrievedCount = Number(retrievedCountString);
+  //   let retrievedKps = Number(retrievedKpsString); had to put in an if statement to initialise on first play
+  if (retrievedCountString !== null) {
+    kittyCount = Number(retrievedCountString);
+  } else {
+    kittyCount = 0;
+  }
+
+  if (retrievedKpsString !== null) {
+    kps = Number(retrievedKpsString);
+  } else {
+    kps = 1;
+  }
   //now to save the kitty per second
   //used .toString since can't save non-strings to the locastorage and this isn't a form.
-  kittyCount = retrievedCount;
-  kps = retrievedKps;
+  //   kittyCount = retrievedCount;
+  //   kps = retrievedKps;
 }
 const stopResetButton = document.getElementById("reset-button");
 
 kittyButton.addEventListener("click", function () {
   //   console.log("I pet the kitty");
+  startInterval();
   catIncrement();
   //   console.log(kittyCount);
   updateCounter();
-  startInterval();
 });
 
 stopResetButton.addEventListener("click", function () {
